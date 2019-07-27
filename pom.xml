@@ -26,7 +26,7 @@
                     <programs>
                         <program>
                             <mainClass>com.home.server.TelegramBot</mainClass>
-                            <name>workerBot</name>
+                            <name>telegram-search-bot</name>
                         </program>
                     </programs>
                 </configuration>
