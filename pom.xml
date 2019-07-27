@@ -25,8 +25,8 @@
                     <assembleDirectory>target</assembleDirectory>
                     <programs>
                         <program>
-                            <mainClass>com.home.server.TelegramBot</mainClass>
-                            <name>telegram-search-bot</name>
+                            <mainClass>Main</mainClass>
+                            <name>telegramBot</name>
                         </program>
                     </programs>
                 </configuration>

@@ -1,1 +1,1 @@
-worker: sh target/bin/telegram-search-bot
+worker: sh target/bin/telegramBot
