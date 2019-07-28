@@ -2,6 +2,7 @@ public class Advert {
     private String name;
     private String link;
     private String price;
+    private String date;
 
     public String getName() {
         return name;
@@ -25,5 +26,13 @@ public class Advert {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

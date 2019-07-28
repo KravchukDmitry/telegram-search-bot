@@ -65,18 +65,22 @@ public class SearchBot extends TelegramLongPollingBot {
     public void sendNewAdverts(long chatId, ArrayList<Advert> adverts){
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
-        message.setText("Новые объявления:");
-        List<List<InlineKeyboardButton>> messageButtons = new ArrayList<>();
-        for(Advert advert : adverts){
-            List<InlineKeyboardButton> buttonsRow = new ArrayList<>();
-            InlineKeyboardButton advertBtn = new InlineKeyboardButton();
-            advertBtn.setText(new StringBuilder(advert.getPrice()).append("\n").append(advert.getName()).toString());
-            advertBtn.setUrl(advert.getLink());
-            buttonsRow.add(advertBtn);
-            messageButtons.add(buttonsRow);
-            InlineKeyboardMarkup markupKeyboard = new InlineKeyboardMarkup();
-            markupKeyboard.setKeyboard(messageButtons);
-            message.setReplyMarkup(markupKeyboard);
+        if(adverts.size() == 0){
+            message.setText("Новые объявлений не найдено");
+        } else {
+            message.setText("Новые объявления:");
+            List<List<InlineKeyboardButton>> messageButtons = new ArrayList<>();
+            for (Advert advert : adverts) {
+                List<InlineKeyboardButton> buttonsRow = new ArrayList<>();
+                InlineKeyboardButton advertBtn = new InlineKeyboardButton();
+                advertBtn.setText(new StringBuilder(advert.getPrice()).append("\n").append(advert.getName()).toString());
+                advertBtn.setUrl(advert.getLink());
+                buttonsRow.add(advertBtn);
+                messageButtons.add(buttonsRow);
+                InlineKeyboardMarkup markupKeyboard = new InlineKeyboardMarkup();
+                markupKeyboard.setKeyboard(messageButtons);
+                message.setReplyMarkup(markupKeyboard);
+            }
         }
         sendMsg(message);
     }
