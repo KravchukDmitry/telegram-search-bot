@@ -123,6 +123,7 @@ public class Parser {
             try {
                 returnVal  = Runtime.getRuntime().exec("ping -n 1 www.google.com").waitFor();
             } catch (Exception e) {
+                System.out.println("isReachable error");
                 e.printStackTrace();
             }
             return returnVal == 0;
