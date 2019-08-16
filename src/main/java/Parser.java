@@ -18,8 +18,6 @@ public class Parser {
     }
     private  ArrayList<Advert> parseByJsoup(String searchUrl) {
         ArrayList<Advert> adverts = new ArrayList<>();
-        getDocument("https://www.avito.ru");
-        getDocument("https://www.google.com");
         Document doc = getDocument(searchUrl);
         for(Element advertElem : doc.select("div.js-catalog_serp > div[data-type='1']")){
             Advert advert = new Advert();
@@ -64,15 +62,12 @@ public class Parser {
         System.out.println("Get doc from url : " + url);
         Document doc = null;
         try {
-            Proxy randomProxy = gerRandomProxy();
+            /*Proxy randomProxy = gerRandomProxy();
             System.setProperty("http.proxyHost", randomProxy.getHost());
-            System.setProperty("http.proxyPort", randomProxy.port);
+            System.setProperty("http.proxyPort", randomProxy.getPort());*/
             Connection connection = Jsoup.connect(url);
             connection.userAgent(getRandomUserAgent());
             connection.referrer(getRandomReferrer());
-            connection.ignoreHttpErrors(false);
-            connection.timeout(5000);
-
             connection.header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3")
                     .header("Accept-Encoding", "gzip, deflate, br")
                     .header("Accept-Language", "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7")
