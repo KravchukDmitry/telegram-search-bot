@@ -1,0 +1,26 @@
+# Tor state file last generated on 2019-04-21 18:56:44 local time
+# Other times below are in UTC
+# You *do not* need to edit this file.
+
+Guard in=default rsa_id=9EEDBAD7EE351996DFC91578E882BEF4FE5EDBFA nickname=niftycastoroides sampled_on=2019-04-10T05:07:09 sampled_by=0.3.5.8 listed=1
+Guard in=default rsa_id=F01B0C11CAB9B58E395874D851E879F76BC7414B nickname=drazisil sampled_on=2019-04-16T20:53:51 sampled_by=0.3.5.8 listed=1
+Guard in=default rsa_id=63540827C4832D214984EA47B7A68C593F9F862F nickname=Unnamed sampled_on=2019-04-09T19:05:22 sampled_by=0.3.5.8 listed=1
+Guard in=default rsa_id=F3879850F9C6797AE14B09EA3E3847CB29D9232A nickname=squirrel123 sampled_on=2019-04-19T21:05:17 sampled_by=0.3.5.8 listed=1
+Guard in=default rsa_id=81C5227141CAFAC07263899FB432544C96E7555C nickname=vps247two sampled_on=2019-04-21T01:35:34 sampled_by=0.3.5.8 listed=1
+Guard in=default rsa_id=C93E8F6669F6F8EF9840E7E4ABEE42DD03C85A5F nickname=torpidsNLikoula sampled_on=2019-04-19T12:44:22 sampled_by=0.3.5.8 listed=1
+Guard in=default rsa_id=2A231A5CA7AF91029B7475511D7D16DF85EC9221 nickname=niftyneochoerus sampled_on=2019-04-18T15:03:01 sampled_by=0.3.5.8 listed=1
+Guard in=default rsa_id=60275B52E810407658FD4278EDB1749C75F956F9 nickname=0s1nt0 sampled_on=2019-04-10T19:07:59 sampled_by=0.3.5.8 listed=1
+Guard in=default rsa_id=885CFB6921E6E7716BB64783348DDB06E17E5B5A nickname=42e7b73f33ff22cfc9c sampled_on=2019-04-21T14:30:34 sampled_by=0.3.5.8 listed=1
+Guard in=default rsa_id=DBE82FA23B9FE3CB2462A6FCF5289DED3CBF4AEE nickname=spechttor1 sampled_on=2019-04-20T23:34:55 sampled_by=0.3.5.8 listed=1
+Guard in=default rsa_id=2391AC90CC728EA9F20E5CFCA389C1F9FD7B16D2 nickname=HumanistischeUnion sampled_on=2019-04-17T10:49:50 sampled_by=0.3.5.8 listed=1
+Guard in=default rsa_id=E409F30BFF353F7883F07DC4973DFB62361AD54F nickname=zwewwlSE1 sampled_on=2019-04-15T17:08:41 sampled_by=0.3.5.8 listed=1
+Guard in=default rsa_id=B5053ABFF845C96B1DD8F45DCF32E6BE1E63F127 nickname=Stephen304 sampled_on=2019-04-12T14:06:51 sampled_by=0.3.5.8 listed=1
+Guard in=default rsa_id=8154154C636EC317C7165FD839F34F79963376C1 nickname=Bragi sampled_on=2019-04-15T18:48:14 sampled_by=0.3.5.8 listed=1
+Guard in=default rsa_id=EAB20BD4083C820EC8329ED5AEBF12019A7749F3 nickname=Laborkatze sampled_on=2019-04-12T23:06:08 sampled_by=0.3.5.8 listed=1
+Guard in=default rsa_id=F10BDE279AE71515DDCCCC61DC19AC8765F8A3CC nickname=ParkBenchInd001 sampled_on=2019-04-15T23:12:32 sampled_by=0.3.5.8 listed=1
+Guard in=default rsa_id=195A26A390C42A1CE9FA77D2FDC25FB65AE27D45 nickname=hovaNet sampled_on=2019-04-18T14:33:06 sampled_by=0.3.5.8 listed=1
+Guard in=default rsa_id=E3F98C86C9E01138DD8EA06B1E660A0CDB4B2782 nickname=Finisterre sampled_on=2019-04-10T07:17:02 sampled_by=0.3.5.8 listed=1
+Guard in=default rsa_id=DA7A26734F304693DCF85894ED4FB10DC423F999 nickname=Publica sampled_on=2019-04-17T04:52:59 sampled_by=0.3.5.8 listed=1
+Guard in=default rsa_id=361D33C96D0F161275EE67E2C91EE10B276E778B nickname=cxx4freedom sampled_on=2019-04-15T07:43:07 sampled_by=0.3.5.8 listed=1
+TorVersion Tor 0.3.5.8 (git-5030edfb534245ed)
+LastWritten 2019-04-21 15:56:44

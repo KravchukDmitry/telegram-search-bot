@@ -1,0 +1,6 @@
+DataDirectory c:\tor_proxy\Data\Tor
+GeoIPFile c:\tor_proxy\Data\Tor\geoip
+GeoIPv6File c:\tor_proxy\Data\Tor\geoip6
+
+AvoidDiskWrites 1
+SocksPort 127.0.0.1:9150
