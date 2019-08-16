@@ -4,6 +4,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -119,14 +120,14 @@ public class Parser {
         }
 
         public boolean isReachable(){
-            int returnVal = -1;
+            boolean isReachable = false;
             try {
-                returnVal  = Runtime.getRuntime().exec("ping -n 1 www.google.com").waitFor();
-            } catch (Exception e) {
-                System.out.println("isReachable error");
-                e.printStackTrace();
+                isReachable = InetAddress.getByName(host).isReachable(1000);
+            } catch (IOException ioe) {
+                System.out.println("host validation error");
+                ioe.printStackTrace();
             }
-            return returnVal == 0;
+            return isReachable;
         }
 
         @Override
