@@ -87,8 +87,6 @@ public class Parser {
                     .header("sec-fetch-mode", "navigate")
                     .header("sec-fetch-site", "none")
                     .header("sec-fetch-user", "?1")
-                    .header(":authority", "www.avito.ru")
-                    .header(":method", "GET")
                     .header("pragma", "no-cache");
             doc = connection.get();
         } catch (IOException ioe) {
