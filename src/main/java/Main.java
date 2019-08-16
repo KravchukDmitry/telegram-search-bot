@@ -14,11 +14,14 @@ public class Main {
             // Set up Http proxy
             DefaultBotOptions botOptions = ApiContext.getInstance(DefaultBotOptions.class);
 
-            if(true) {
-                botOptions.setProxyHost("127.0.0.1");
-                botOptions.setProxyPort(9050);
+            if(false) {
+                String adr = "127.0.0.1";
+                int port = 9050;
+                botOptions.setProxyHost("adr");
+                botOptions.setProxyPort(port);
                 // Select proxy type: [HTTP|SOCKS4|SOCKS5] (default: NO_PROXY)
                 botOptions.setProxyType(DefaultBotOptions.ProxyType.SOCKS5);
+                System.out.println("Proxy on with " + adr + ":" + port);
             }
 
             // Register your newly created AbilityBot
