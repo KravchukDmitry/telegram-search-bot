@@ -9,7 +9,7 @@ public class Main {
         ApiContextInitializer.init();
         TelegramBotsApi botsApi = new TelegramBotsApi();
         DefaultBotOptions botOptions = ApiContext.getInstance(DefaultBotOptions.class);
-        if (false) {
+        if (false) { // для запуска на локальной машине проставить true и запустить tor_proxy
             String adr = "127.0.0.1";
             int port = 9050;
             botOptions.setProxyHost(adr);
