@@ -53,7 +53,17 @@ public class Parser {
     protected Proxy gerRandomProxy() {
         ArrayList<Proxy> proxies = new ArrayList<>();
         proxies.add(new Proxy("35.245.145.147", "8080"));
-        Proxy proxy = proxies.get(new Random().nextInt(proxies.size()));
+        proxies.add(new Proxy("123.200.13.54", "8080"));
+        proxies.add(new Proxy("103.224.48.73", "8080"));
+        proxies.add(new Proxy("203.143.24.209", "8080"));
+        Proxy proxy = null;
+        while (true) {
+            proxy = proxies.get(new Random().nextInt(proxies.size()));
+            if (!proxy.isReachable())
+                proxies.remove(proxy);
+            else
+                break;
+        }
         System.out.println("Set proxy : " + proxies);
         return proxy;
     }
@@ -62,9 +72,9 @@ public class Parser {
         System.out.println("Get doc from url : " + url);
         Document doc = null;
         try {
-            /*Proxy randomProxy = gerRandomProxy();
+            Proxy randomProxy = gerRandomProxy();
             System.setProperty("http.proxyHost", randomProxy.getHost());
-            System.setProperty("http.proxyPort", randomProxy.getPort());*/
+            System.setProperty("http.proxyPort", randomProxy.getPort());
             Connection connection = Jsoup.connect(url);
             connection.userAgent(getRandomUserAgent());
             connection.referrer(getRandomReferrer());
@@ -106,6 +116,16 @@ public class Parser {
         public Proxy(String host, String port) {
             this.host = host;
             this.port = port;
+        }
+
+        public boolean isReachable(){
+            int returnVal = -1;
+            try {
+                returnVal  = Runtime.getRuntime().exec("ping -n 1 www.google.com").waitFor();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return returnVal == 0;
         }
 
         @Override
