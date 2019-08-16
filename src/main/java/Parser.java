@@ -79,13 +79,17 @@ public class Parser {
             Connection connection = Jsoup.connect(url);
             connection.userAgent(getRandomUserAgent());
             connection.referrer(getRandomReferrer());
+            connection.timeout(5000);
             connection.header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3")
                     .header("Accept-Encoding", "gzip, deflate, br")
                     .header("Accept-Language", "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7")
                     .header("cache-control", "no-cache")
                     .header("sec-fetch-mode", "navigate")
                     .header("sec-fetch-site", "none")
-                    .header("sec-fetch-user", "?1");
+                    .header("sec-fetch-user", "?1")
+                    .header(":authority", "www.avito.ru")
+                    .header(":method", "GET")
+                    .header("pragma", "no-cache");
             doc = connection.get();
         } catch (IOException ioe) {
             ioe.printStackTrace();
