@@ -1,3 +1,6 @@
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -9,8 +12,27 @@ import java.util.Random;
 
 public class Skynet {
 
-    public static Document getPage(String searchUrl) {
-        System.out.println("Get doc from url : " + searchUrl);
+    public static Document getPageByHtmlUnit(String searchUrl){
+        System.out.println("Get doc by htmlUnit from url : " + searchUrl);
+        WebClient webClient = new WebClient(BrowserVersion.FIREFOX_52);
+        webClient.getOptions().setJavaScriptEnabled(false);
+        webClient.getOptions().setCssEnabled(false);
+        webClient.getOptions().setRedirectEnabled(true);
+        webClient.getOptions().setThrowExceptionOnScriptError(false);
+        webClient.getCookieManager().setCookiesEnabled(true);
+        webClient.getOptions().setUseInsecureSSL(true);
+        HtmlPage page = null;
+        try {
+            page = webClient.getPage(searchUrl);
+        } catch (IOException ioe) {
+            System.out.println("Error while getPage");
+            ioe.printStackTrace();
+        }
+        return Jsoup.parse(page.getWebResponse().getContentAsString());
+    }
+
+    public static Document getPageByJsoup(String searchUrl) {
+        System.out.println("Get doc by Jsoup from url : " + searchUrl);
         Document doc = null;
         try {
             Skynet.Proxy randomProxy = gerRandomProxy();

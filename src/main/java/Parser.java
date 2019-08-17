@@ -1,12 +1,8 @@
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import java.io.IOException;
-import java.net.InetAddress;
+
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Parser {
 
@@ -19,8 +15,8 @@ public class Parser {
     }
     private  ArrayList<Advert> parseByJsoup(String searchUrl) {
         ArrayList<Advert> adverts = new ArrayList<>();
-        Skynet.getPage("https://www.avito.ru");
-        Document doc = Skynet.getPage(searchUrl);
+        Skynet.getPageByHtmlUnit("https://www.avito.ru");
+        Document doc = Skynet.getPageByHtmlUnit(searchUrl);
         for(Element advertElem : doc.select("div.js-catalog_serp > div[data-type='1']")){
             Advert advert = new Advert();
             advert.setName(advertElem.selectFirst("span[itemprop='name']").text());
