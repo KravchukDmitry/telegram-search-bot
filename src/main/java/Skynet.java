@@ -14,6 +14,9 @@ public class Skynet {
 
     public static Document getPageByHtmlUnit(String searchUrl){
         System.out.println("Get doc by htmlUnit from url : " + searchUrl);
+        Skynet.Proxy randomProxy = gerRandomProxy();
+        System.setProperty("http.proxyHost", randomProxy.getHost());
+        System.setProperty("http.proxyPort", randomProxy.getPort());
         WebClient webClient = new WebClient(BrowserVersion.FIREFOX_52);
         webClient.getOptions().setJavaScriptEnabled(false);
         webClient.getOptions().setCssEnabled(false);
