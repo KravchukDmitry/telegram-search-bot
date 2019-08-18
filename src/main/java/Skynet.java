@@ -1,4 +1,5 @@
 import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.ProxyConfig;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import org.jsoup.Connection;
@@ -14,12 +15,12 @@ public class Skynet {
 
     public static Document getPageByHtmlUnit(String searchUrl, boolean proxyEnabled){
         System.out.println("Get doc by htmlUnit from url : " + searchUrl);
+        WebClient webClient = new WebClient(BrowserVersion.FIREFOX_52);
         if (proxyEnabled) {
             Skynet.Proxy randomProxy = gerRandomProxy();
-            System.setProperty("http.proxyHost", randomProxy.getHost());
-            System.setProperty("http.proxyPort", randomProxy.getPort());
+            ProxyConfig proxyConfig = new ProxyConfig(randomProxy.getHost(), randomProxy.getPort());
+            webClient.getOptions().setProxyConfig(proxyConfig);
         }
-        WebClient webClient = new WebClient(BrowserVersion.FIREFOX_52);
         webClient.getOptions().setJavaScriptEnabled(false);
         webClient.getOptions().setCssEnabled(false);
         webClient.getOptions().setRedirectEnabled(true);
@@ -38,17 +39,16 @@ public class Skynet {
 
     public static Document getPageByJsoup(String searchUrl, boolean proxyEnabled) {
         System.out.println("Get doc by Jsoup from url : " + searchUrl);
-        if (proxyEnabled) {
-            Skynet.Proxy randomProxy = gerRandomProxy();
-            System.setProperty("http.proxyHost", randomProxy.getHost());
-            System.setProperty("http.proxyPort", randomProxy.getPort());
-        }
         Document doc = null;
         try {
             Connection connection = Jsoup.connect(searchUrl);
             connection.userAgent(getRandomUserAgent());
             connection.referrer("https://www.avito.ru/moskva/tovary_dlya_kompyutera");
             connection.timeout(5000);
+            if (proxyEnabled) {
+                Skynet.Proxy randomProxy = gerRandomProxy();
+                connection.proxy(randomProxy.getHost(), randomProxy.getPort());
+            }
             connection.header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3")
                     .header("Accept-Encoding", "gzip, deflate, br")
                     .header("Accept-Language", "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7")
@@ -89,10 +89,10 @@ public class Skynet {
 
     protected static Proxy gerRandomProxy() {
         ArrayList<Proxy> proxies = new ArrayList<>();
-        proxies.add(new Proxy("35.245.145.147", "8080"));
-        proxies.add(new Proxy("123.200.13.54", "8080"));
-        proxies.add(new Proxy("103.224.48.73", "8080"));
-        proxies.add(new Proxy("203.143.24.209", "8080"));
+        proxies.add(new Proxy("35.245.145.147", 8080));
+        proxies.add(new Proxy("123.200.13.54", 8080));
+        proxies.add(new Proxy("103.224.48.73", 8080));
+        proxies.add(new Proxy("203.143.24.209", 8080));
         Proxy proxy = null;
         while (true) {
             proxy = proxies.get(new Random().nextInt(proxies.size()));
@@ -109,7 +109,7 @@ public class Skynet {
 
     public static class Proxy {
         protected String host;
-        protected String port;
+        protected int port;
 
         public String getHost() {
             return host;
@@ -119,15 +119,15 @@ public class Skynet {
             this.host = host;
         }
 
-        public String getPort() {
+        public int getPort() {
             return port;
         }
 
-        public void setPort(String port) {
+        public void setPort(int port) {
             this.port = port;
         }
 
-        public Proxy(String host, String port) {
+        public Proxy(String host, int port) {
             this.host = host;
             this.port = port;
         }
