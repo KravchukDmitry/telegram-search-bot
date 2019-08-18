@@ -14,10 +14,7 @@ public class ApiClient {
         HttpResponse response = client.execute(get);
         String json = EntityUtils.toString(response.getEntity());
         ProxyData proxyData = new Gson().fromJson(json, ProxyData.class);
-        for (Proxy proxy : proxyData.getProxies()) {
-            System.out.println(proxy);
-        }
-        return  new Proxy("",10);
+        return  proxyData.getProxies().get(0);
     }
 
 }

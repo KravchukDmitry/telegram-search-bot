@@ -16,7 +16,7 @@ public class Skynet {
         System.out.println("Get doc by htmlUnit from url : " + searchUrl);
         WebClient webClient = new WebClient(BrowserVersion.FIREFOX_52);
         if (proxyEnabled) {
-            Proxy randomProxy = gerRandomProxy();
+            Proxy randomProxy = ApiClient.getRandomProxy();
             ProxyConfig proxyConfig = new ProxyConfig(randomProxy.getIp(), randomProxy.getPort());
             webClient.getOptions().setProxyConfig(proxyConfig);
         }
@@ -34,7 +34,7 @@ public class Skynet {
         System.out.println("Get doc by Jsoup from url : " + searchUrl);
         Connection connection = Jsoup.connect(searchUrl);
         if (proxyEnabled) {
-            Proxy randomProxy = gerRandomProxy();
+            Proxy randomProxy = ApiClient.getRandomProxy();
             connection.proxy(randomProxy.getIp(), randomProxy.getPort());
         }
         connection.userAgent(getRandomUserAgent());
@@ -71,23 +71,5 @@ public class Skynet {
         String referrer = referrers.get(new Random().nextInt(referrers.size()));
         System.out.println("Set referrer : " + referrer);
         return referrer;
-    }
-
-    protected static Proxy gerRandomProxy() {
-        ArrayList<Proxy> proxies = new ArrayList<>();
-        proxies.add(new Proxy("35.245.145.147", 8080));
-        proxies.add(new Proxy("123.200.13.54", 8080));
-        proxies.add(new Proxy("103.224.48.73", 8080));
-        proxies.add(new Proxy("203.143.24.209", 8080));
-        Proxy proxy = null;
-        while (true) {
-            proxy = proxies.get(new Random().nextInt(proxies.size()));
-            if (!proxy.isReachable())
-                proxies.remove(proxy);
-            else
-                break;
-        }
-        System.out.println("Set proxy : " + proxy);
-        return proxy;
     }
 }

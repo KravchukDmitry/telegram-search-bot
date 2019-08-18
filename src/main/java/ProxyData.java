@@ -1,15 +1,15 @@
 import java.util.ArrayList;
 
 public class ProxyData {
-    private ArrayList<Proxy> proxies;
+    private ArrayList<Proxy> data;
     private int count;
 
     public ArrayList<Proxy> getProxies() {
-        return proxies;
+        return data;
     }
 
     public void setProxies(ArrayList<Proxy> proxies) {
-        this.proxies = proxies;
+        this.data = proxies;
     }
 
     public int getCount() {
