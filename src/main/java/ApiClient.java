@@ -15,7 +15,7 @@ public class ApiClient {
         String json = EntityUtils.toString(response.getEntity());
         ProxyData proxyData = new Gson().fromJson(json, ProxyData.class);
         Proxy randomProxy = proxyData.getProxies().get(0);
-        System.out.println("Set random prosy: " + randomProxy);
+        System.out.println("Set random proxy: " + randomProxy);
         return  randomProxy;
     }
 
