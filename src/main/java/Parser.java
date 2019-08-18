@@ -1,4 +1,3 @@
-import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
@@ -14,7 +13,7 @@ public class Parser {
             ArrayList<Advert> adverts = null;
             try {
                 adverts = parseAdverts(searchUrl);
-            } catch (IOException | FailingHttpStatusCodeException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return adverts;
@@ -23,8 +22,12 @@ public class Parser {
     }
     private static ArrayList<Advert> parseAdverts(String searchUrl) throws IOException {
         ArrayList<Advert> adverts = new ArrayList<>();
-        Skynet.getPageByJsoup("https://www.avito.ru", true);
-        Document doc = Skynet.getPageByHtmlUnit(searchUrl, true);
+        Document doc = null;
+        try {
+            doc = Skynet.getPageByJsoup(searchUrl, true);
+        } catch (Exception e) {
+            doc = Skynet.getPageByHtmlUnit(searchUrl, true);
+        }
         for(Element advertElem : doc.select("div.js-catalog_serp > div[data-type='1']")){
             Advert advert = new Advert();
             advert.setName(advertElem.selectFirst("span[itemprop='name']").text());
