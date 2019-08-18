@@ -55,18 +55,18 @@ public class SearchBot extends TelegramLongPollingBot {
     }
 
     public String getBotUsername() {
-        return "knigga_sbot";
+        return System.getenv("BotUsername");
     }
 
     public String getBotToken() {
-        return "864092425:AAEnAhjJbHLkgVu37m1bSrE6L_fbM45cyh8";
+        return System.getenv("BotToken");
     }
 
     public void sendNewAdverts(long chatId, ArrayList<Advert> adverts){
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
         if(adverts == null){
-            message.setText("Ошибка подключения сайту объявлений");
+            message.setText("Ошибка подключения.  Доска объявлений отклонила запрос.");
         } else if(adverts.size() == 0){
             message.setText("Новые объявлений не найдено");
         } else {
