@@ -17,7 +17,7 @@ public class Skynet {
         WebClient webClient = new WebClient(BrowserVersion.FIREFOX_52);
         if (proxyEnabled) {
             Proxy randomProxy = gerRandomProxy();
-            ProxyConfig proxyConfig = new ProxyConfig(randomProxy.getHost(), randomProxy.getPort());
+            ProxyConfig proxyConfig = new ProxyConfig(randomProxy.getIp(), randomProxy.getPort());
             webClient.getOptions().setProxyConfig(proxyConfig);
         }
         webClient.getOptions().setJavaScriptEnabled(false);
@@ -35,7 +35,7 @@ public class Skynet {
         Connection connection = Jsoup.connect(searchUrl);
         if (proxyEnabled) {
             Proxy randomProxy = gerRandomProxy();
-            connection.proxy(randomProxy.getHost(), randomProxy.getPort());
+            connection.proxy(randomProxy.getIp(), randomProxy.getPort());
         }
         connection.userAgent(getRandomUserAgent());
         connection.referrer("https://www.avito.ru/moskva/tovary_dlya_kompyutera");

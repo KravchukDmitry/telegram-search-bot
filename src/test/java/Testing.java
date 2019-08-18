@@ -1,3 +1,4 @@
+import com.google.gson.Gson;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -12,5 +13,10 @@ public class Testing {
         for (Advert a : advertList) {
             System.out.println(a);
         }
+    }
+
+    @Test
+    public void test2() throws  Throwable{
+        ApiClient.getRandomProxy();
     }
 }

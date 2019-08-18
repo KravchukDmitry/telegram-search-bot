@@ -2,15 +2,22 @@ import java.io.IOException;
 import java.net.InetAddress;
 
 public class Proxy {
-    protected String host;
+    protected String ipPort;
+    protected String ip;
     protected int port;
+    protected String country;
+    protected String last_checked;
+    protected String proxy_level;
+    protected String type;
+    protected int speed;
+    protected Support support;
 
-    public String getHost() {
-        return host;
+    public String getIp() {
+        return ip;
     }
 
-    public void setHost(String host) {
-        this.host = host;
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public int getPort() {
@@ -22,14 +29,14 @@ public class Proxy {
     }
 
     public Proxy(String host, int port) {
-        this.host = host;
+        this.ip = host;
         this.port = port;
     }
 
     public boolean isReachable() {
         boolean isReachable = false;
         try {
-            isReachable = InetAddress.getByName(host).isReachable(1000);
+            isReachable = InetAddress.getByName(ip).isReachable(1000);
         } catch (IOException ioe) {
             System.out.println("host validation error");
             ioe.printStackTrace();
@@ -39,6 +46,17 @@ public class Proxy {
 
     @Override
     public String toString() {
-        return "Proxy host : " + host + " port : " + port;
+        return "Proxy host : " + ip + " port : " + port;
+    }
+
+    private class Support {
+        int https;
+        int get;
+        int post;
+        int cookies;
+        int referer;
+        int user_agent;
+        int google;
+
     }
 }
