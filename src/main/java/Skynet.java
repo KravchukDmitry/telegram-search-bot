@@ -53,7 +53,7 @@ public class Skynet {
     }
 
 
-    protected static String getRandomUserAgent(){
+    private static String getRandomUserAgent(){
         ArrayList<String> userAgents = new ArrayList<>();
         userAgents.add("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0");
         userAgents.add("Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0");
@@ -63,7 +63,7 @@ public class Skynet {
         return userAgent;
     }
 
-    protected static String getRandomReferrer(){
+    private static String getRandomReferrer(){
         ArrayList<String> referrers = new ArrayList<>();
         referrers.add("https://www.google.com");
         referrers.add("https://yandex.ru/");

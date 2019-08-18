@@ -12,7 +12,7 @@ public class Parser {
         if (searchUrl.startsWith("https://www.avito.ru")) {
             ArrayList<Advert> adverts = null;
             try {
-                adverts = parseByJsoup(searchUrl);
+                adverts = parseAdverts(searchUrl);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -20,9 +20,9 @@ public class Parser {
         }
         return null;
     }
-    private static ArrayList<Advert> parseByJsoup(String searchUrl) throws IOException {
+    private static ArrayList<Advert> parseAdverts(String searchUrl) throws IOException {
         ArrayList<Advert> adverts = new ArrayList<>();
-        Skynet.getPageByHtmlUnit("https://www.avito.ru", false);
+        Skynet.getPageByJsoup("https://www.avito.ru", false);
         Document doc = Skynet.getPageByHtmlUnit(searchUrl, true);
         for(Element advertElem : doc.select("div.js-catalog_serp > div[data-type='1']")){
             Advert advert = new Advert();
