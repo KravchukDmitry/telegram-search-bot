@@ -101,7 +101,7 @@ public class Skynet {
             else
                 break;
         }
-        System.out.println("Set proxy : " + proxies);
+        System.out.println("Set proxy : " + proxy);
         return proxy;
     }
 
