@@ -2,15 +2,16 @@ import java.io.IOException;
 import java.net.InetAddress;
 
 public class Proxy {
-    protected String ipPort;
-    protected String ip;
-    protected int port;
-    protected String country;
-    protected String last_checked;
-    protected String proxy_level;
-    protected String type;
-    protected int speed;
-    protected Support support;
+    private String ipPort;
+    private String ip;
+    private int port;
+    private String country;
+    private String last_checked;
+    private String proxy_level;
+    private String type;
+    private int speed;
+    private Support support;
+    private boolean isWorks;
 
     public String getIp() {
         return ip;
@@ -42,6 +43,14 @@ public class Proxy {
             ioe.printStackTrace();
         }
         return isReachable;
+    }
+
+    public boolean isWorks() {
+        return isWorks;
+    }
+
+    public void setWorks(boolean works) {
+        isWorks = works;
     }
 
     @Override

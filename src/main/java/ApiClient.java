@@ -10,12 +10,13 @@ import java.io.IOException;
 public class ApiClient {
     public static Proxy getRandomProxy() throws IOException{
         CloseableHttpClient client = HttpClientBuilder.create().build();
-        HttpGet get = new HttpGet("http://pubproxy.com/api/proxy?country=RU&type=http");
+        HttpGet get = new HttpGet("http://pubproxy.com/api/proxy?country=RU&type=http&port=8080,80&https=true");
         HttpResponse response = client.execute(get);
         String json = EntityUtils.toString(response.getEntity());
         ProxyData proxyData = new Gson().fromJson(json, ProxyData.class);
         Proxy randomProxy = proxyData.getProxies().get(0);
         System.out.println("Set random proxy: " + randomProxy);
+        randomProxy.setWorks(true);
         return  randomProxy;
     }
 

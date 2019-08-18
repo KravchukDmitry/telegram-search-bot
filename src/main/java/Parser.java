@@ -22,13 +22,8 @@ public class Parser {
     }
     private static ArrayList<Advert> parseAdverts(String searchUrl) throws IOException {
         ArrayList<Advert> adverts = new ArrayList<>();
-        Document doc = null;
-        try {
-            doc = Skynet.getPageByJsoup(searchUrl, true);
-        } catch (Exception e) {
-            doc = Skynet.getPageByHtmlUnit(searchUrl, true);
-        }
-        for(Element advertElem : doc.select("div.js-catalog_serp > div[data-type='1']")){
+        Document document = Skynet.getPage(searchUrl, true);
+        for(Element advertElem : document.select("div.js-catalog_serp > div[data-type='1']")){
             Advert advert = new Advert();
             advert.setName(advertElem.selectFirst("span[itemprop='name']").text());
             advert.setLink("https://www.avito.ru" + advertElem.selectFirst("span[itemprop='name']").parent().attr("href"));

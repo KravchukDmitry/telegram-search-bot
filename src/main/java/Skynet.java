@@ -11,13 +11,34 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Skynet {
+    private static Proxy currentProxy;
+
+
+    public static Document getPage(String searchUrl, boolean  proxyEnabled) {
+        Document doc = null;
+        try {
+            doc = Skynet.getPageByJsoup(searchUrl, proxyEnabled);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error on getPageByJsoup");
+            try {
+                doc = Skynet.getPageByHtmlUnit(searchUrl, proxyEnabled);
+            } catch (Exception ee){
+                ee.printStackTrace();
+                System.out.println("Error on getPageByHtmlUnit. Current proxy doesn't work");
+                currentProxy.setWorks(false);
+            }
+        }
+        return doc;
+    }
 
     public static Document getPageByHtmlUnit(String searchUrl, boolean proxyEnabled) throws IOException {
         System.out.println("Get doc by htmlUnit from url : " + searchUrl);
         WebClient webClient = new WebClient(BrowserVersion.FIREFOX_52);
         if (proxyEnabled) {
-            Proxy randomProxy = ApiClient.getRandomProxy();
-            ProxyConfig proxyConfig = new ProxyConfig(randomProxy.getIp(), randomProxy.getPort());
+            if(currentProxy == null || !currentProxy.isWorks())
+                currentProxy = ApiClient.getRandomProxy();
+            ProxyConfig proxyConfig = new ProxyConfig(currentProxy.getIp(), currentProxy.getPort());
             webClient.getOptions().setProxyConfig(proxyConfig);
         }
         webClient.getOptions().setJavaScriptEnabled(false);
@@ -35,8 +56,9 @@ public class Skynet {
         System.out.println("Get doc by Jsoup from url : " + searchUrl);
         Connection connection = Jsoup.connect(searchUrl);
         if (proxyEnabled) {
-            Proxy randomProxy = ApiClient.getRandomProxy();
-            connection.proxy(randomProxy.getIp(), randomProxy.getPort());
+            if(currentProxy == null || !currentProxy.isWorks())
+                currentProxy = ApiClient.getRandomProxy();
+            connection.proxy(currentProxy.getIp(), currentProxy.getPort());
         }
         connection.userAgent(getRandomUserAgent());
         connection.referrer("https://www.avito.ru/moskva/tovary_dlya_kompyutera");
