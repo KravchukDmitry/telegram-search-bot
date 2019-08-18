@@ -26,6 +26,7 @@ public class Skynet {
         webClient.getOptions().setThrowExceptionOnScriptError(false);
         webClient.getCookieManager().setCookiesEnabled(true);
         webClient.getOptions().setUseInsecureSSL(true);
+        webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
         HtmlPage page = webClient.getPage(searchUrl);
         return Jsoup.parse(page.getWebResponse().getContentAsString());
     }
