@@ -2,18 +2,25 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Parser {
 
-    public ArrayList<Advert> getAdverts(String searchUrl){
+    public ArrayList<Advert> getAdverts(String searchUrl) {
         // TODO проврека валидноси переданного URL и замена пробелов в начале и конце
         if (searchUrl.startsWith("https://www.avito.ru")) {
-            return parseByJsoup(searchUrl);
+            ArrayList<Advert> adverts = null;
+            try {
+                adverts = parseByJsoup(searchUrl);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return adverts;
         }
         return null;
     }
-    private  ArrayList<Advert> parseByJsoup(String searchUrl) {
+    private  ArrayList<Advert> parseByJsoup(String searchUrl) throws IOException {
         ArrayList<Advert> adverts = new ArrayList<>();
         Skynet.getPageByHtmlUnit("https://www.avito.ru", false);
         Document doc = Skynet.getPageByHtmlUnit(searchUrl, true);

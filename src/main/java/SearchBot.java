@@ -65,7 +65,9 @@ public class SearchBot extends TelegramLongPollingBot {
     public void sendNewAdverts(long chatId, ArrayList<Advert> adverts){
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
-        if(adverts.size() == 0){
+        if(adverts == null){
+            message.setText("Ошибка подключения сайту объявлений");
+        } else if(adverts.size() == 0){
             message.setText("Новые объявлений не найдено");
         } else {
             message.setText("Новые объявления:");

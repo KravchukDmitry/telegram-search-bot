@@ -13,7 +13,7 @@ import java.util.Random;
 
 public class Skynet {
 
-    public static Document getPageByHtmlUnit(String searchUrl, boolean proxyEnabled){
+    public static Document getPageByHtmlUnit(String searchUrl, boolean proxyEnabled) throws IOException {
         System.out.println("Get doc by htmlUnit from url : " + searchUrl);
         WebClient webClient = new WebClient(BrowserVersion.FIREFOX_52);
         if (proxyEnabled) {
@@ -27,43 +27,30 @@ public class Skynet {
         webClient.getOptions().setThrowExceptionOnScriptError(false);
         webClient.getCookieManager().setCookiesEnabled(true);
         webClient.getOptions().setUseInsecureSSL(true);
-        HtmlPage page = null;
-        try {
-            page = webClient.getPage(searchUrl);
-        } catch (IOException ioe) {
-            System.out.println("Error while getPage");
-            ioe.printStackTrace();
-        }
+        HtmlPage page = webClient.getPage(searchUrl);
         return Jsoup.parse(page.getWebResponse().getContentAsString());
     }
 
-    public static Document getPageByJsoup(String searchUrl, boolean proxyEnabled) {
+    public static Document getPageByJsoup(String searchUrl, boolean proxyEnabled) throws IOException{
         System.out.println("Get doc by Jsoup from url : " + searchUrl);
-        Document doc = null;
-        try {
-            Connection connection = Jsoup.connect(searchUrl);
-            connection.userAgent(getRandomUserAgent());
-            connection.referrer("https://www.avito.ru/moskva/tovary_dlya_kompyutera");
-            connection.timeout(5000);
-            if (proxyEnabled) {
-                Skynet.Proxy randomProxy = gerRandomProxy();
-                connection.proxy(randomProxy.getHost(), randomProxy.getPort());
-            }
-            connection.header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3")
-                    .header("Accept-Encoding", "gzip, deflate, br")
-                    .header("Accept-Language", "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7")
-                    .header("cache-control", "no-cache")
-                    .header("sec-fetch-mode", "navigate")
-                    .header("sec-fetch-site", "same-origin")
-                    .header("sec-fetch-user", "?1")
-                    .header("pragma", "no-cache")
-                    .header("upgrade-insecure-requests", "1");
-            doc = connection.get();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-            System.out.println("ошибка получения html");
+        Connection connection = Jsoup.connect(searchUrl);
+        if (proxyEnabled) {
+            Skynet.Proxy randomProxy = gerRandomProxy();
+            connection.proxy(randomProxy.getHost(), randomProxy.getPort());
         }
-        return doc;
+        connection.userAgent(getRandomUserAgent());
+        connection.referrer("https://www.avito.ru/moskva/tovary_dlya_kompyutera");
+        connection.timeout(5000);
+        connection.header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3")
+                .header("Accept-Encoding", "gzip, deflate, br")
+                .header("Accept-Language", "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7")
+                .header("cache-control", "no-cache")
+                .header("sec-fetch-mode", "navigate")
+                .header("sec-fetch-site", "same-origin")
+                .header("sec-fetch-user", "?1")
+                .header("pragma", "no-cache")
+                .header("upgrade-insecure-requests", "1");
+        return connection.get();
     }
 
 
