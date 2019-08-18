@@ -12,11 +12,13 @@ import java.util.Random;
 
 public class Skynet {
 
-    public static Document getPageByHtmlUnit(String searchUrl){
+    public static Document getPageByHtmlUnit(String searchUrl, boolean proxyEnabled){
         System.out.println("Get doc by htmlUnit from url : " + searchUrl);
-        Skynet.Proxy randomProxy = gerRandomProxy();
-        System.setProperty("http.proxyHost", randomProxy.getHost());
-        System.setProperty("http.proxyPort", randomProxy.getPort());
+        if (proxyEnabled) {
+            Skynet.Proxy randomProxy = gerRandomProxy();
+            System.setProperty("http.proxyHost", randomProxy.getHost());
+            System.setProperty("http.proxyPort", randomProxy.getPort());
+        }
         WebClient webClient = new WebClient(BrowserVersion.FIREFOX_52);
         webClient.getOptions().setJavaScriptEnabled(false);
         webClient.getOptions().setCssEnabled(false);
@@ -34,13 +36,15 @@ public class Skynet {
         return Jsoup.parse(page.getWebResponse().getContentAsString());
     }
 
-    public static Document getPageByJsoup(String searchUrl) {
+    public static Document getPageByJsoup(String searchUrl, boolean proxyEnabled) {
         System.out.println("Get doc by Jsoup from url : " + searchUrl);
-        Document doc = null;
-        try {
+        if (proxyEnabled) {
             Skynet.Proxy randomProxy = gerRandomProxy();
             System.setProperty("http.proxyHost", randomProxy.getHost());
             System.setProperty("http.proxyPort", randomProxy.getPort());
+        }
+        Document doc = null;
+        try {
             Connection connection = Jsoup.connect(searchUrl);
             connection.userAgent(getRandomUserAgent());
             connection.referrer("https://www.avito.ru/moskva/tovary_dlya_kompyutera");

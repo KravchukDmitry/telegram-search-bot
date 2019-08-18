@@ -15,8 +15,8 @@ public class Parser {
     }
     private  ArrayList<Advert> parseByJsoup(String searchUrl) {
         ArrayList<Advert> adverts = new ArrayList<>();
-        Skynet.getPageByHtmlUnit("https://www.avito.ru");
-        Document doc = Skynet.getPageByHtmlUnit(searchUrl);
+        Skynet.getPageByHtmlUnit("https://www.avito.ru", false);
+        Document doc = Skynet.getPageByHtmlUnit(searchUrl, true);
         for(Element advertElem : doc.select("div.js-catalog_serp > div[data-type='1']")){
             Advert advert = new Advert();
             advert.setName(advertElem.selectFirst("span[itemprop='name']").text());

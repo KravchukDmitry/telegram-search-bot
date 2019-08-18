@@ -1,1 +1,1 @@
-worker: sh target/bin/telegramBot
+web: sh target/bin/telegramBot
