@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Parser {
 
-    public ArrayList<Advert> getAdverts(String searchUrl) {
+    public static ArrayList<Advert> getAdverts(String searchUrl) {
         // TODO проврека валидноси переданного URL и замена пробелов в начале и конце
         if (searchUrl.startsWith("https://www.avito.ru")) {
             ArrayList<Advert> adverts = null;
@@ -20,7 +20,7 @@ public class Parser {
         }
         return null;
     }
-    private  ArrayList<Advert> parseByJsoup(String searchUrl) throws IOException {
+    private static ArrayList<Advert> parseByJsoup(String searchUrl) throws IOException {
         ArrayList<Advert> adverts = new ArrayList<>();
         Skynet.getPageByHtmlUnit("https://www.avito.ru", false);
         Document doc = Skynet.getPageByHtmlUnit(searchUrl, true);
