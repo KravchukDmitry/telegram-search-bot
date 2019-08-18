@@ -7,7 +7,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -17,7 +16,7 @@ public class Skynet {
         System.out.println("Get doc by htmlUnit from url : " + searchUrl);
         WebClient webClient = new WebClient(BrowserVersion.FIREFOX_52);
         if (proxyEnabled) {
-            Skynet.Proxy randomProxy = gerRandomProxy();
+            Proxy randomProxy = gerRandomProxy();
             ProxyConfig proxyConfig = new ProxyConfig(randomProxy.getHost(), randomProxy.getPort());
             webClient.getOptions().setProxyConfig(proxyConfig);
         }
@@ -35,7 +34,7 @@ public class Skynet {
         System.out.println("Get doc by Jsoup from url : " + searchUrl);
         Connection connection = Jsoup.connect(searchUrl);
         if (proxyEnabled) {
-            Skynet.Proxy randomProxy = gerRandomProxy();
+            Proxy randomProxy = gerRandomProxy();
             connection.proxy(randomProxy.getHost(), randomProxy.getPort());
         }
         connection.userAgent(getRandomUserAgent());
@@ -91,49 +90,4 @@ public class Skynet {
         System.out.println("Set proxy : " + proxy);
         return proxy;
     }
-
-
-
-    public static class Proxy {
-        protected String host;
-        protected int port;
-
-        public String getHost() {
-            return host;
-        }
-
-        public void setHost(String host) {
-            this.host = host;
-        }
-
-        public int getPort() {
-            return port;
-        }
-
-        public void setPort(int port) {
-            this.port = port;
-        }
-
-        public Proxy(String host, int port) {
-            this.host = host;
-            this.port = port;
-        }
-
-        public boolean isReachable(){
-            boolean isReachable = false;
-            try {
-                isReachable = InetAddress.getByName(host).isReachable(1000);
-            } catch (IOException ioe) {
-                System.out.println("host validation error");
-                ioe.printStackTrace();
-            }
-            return isReachable;
-        }
-
-        @Override
-        public String toString() {
-            return "Proxy host : " + host + " port : " + port;
-        }
-    }
-
 }
