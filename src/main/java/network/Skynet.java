@@ -1,7 +1,9 @@
+package network;
+
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.ProxyConfig;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import exceptions.PageGettingException;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,12 +19,12 @@ public class Skynet {
     public static Document getPage(String searchUrl, boolean proxyEnabled) {
         try {
             return Skynet.getPageByJsoup(searchUrl, proxyEnabled);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error on getPageByJsoup");
             try {
                 return Skynet.getPageByHtmlUnit(searchUrl, proxyEnabled);
-            } catch (Exception ee) {
+            } catch (IOException ee) {
                 ee.printStackTrace();
                 System.out.println("Error on getPageByHtmlUnit. Current proxy doesn't work");
                 currentProxy.setWorks(false);
@@ -39,8 +41,7 @@ public class Skynet {
             ProxyConfig proxyConfig = new ProxyConfig(currentProxy.getIp(), currentProxy.getPort());
             webClient.getOptions().setProxyConfig(proxyConfig);
         }
-        HtmlPage page = webClient.getPage(searchUrl);
-        return Jsoup.parse(page.getWebResponse().getContentAsString());
+        return Jsoup.parse(webClient.getPage(searchUrl).getWebResponse().getContentAsString());
     }
 
     public static Document getPageByJsoup(String searchUrl, boolean proxyEnabled) throws IOException {
@@ -51,6 +52,7 @@ public class Skynet {
             connection.proxy(currentProxy.getIp(), currentProxy.getPort());
         }
         return connection.get();
+
     }
 
 
@@ -86,7 +88,7 @@ public class Skynet {
         return webClient;
     }
 
-    private static void setProxy() throws IOException {
+    private static void setProxy() {
         if (currentProxy == null || !currentProxy.isWorks()) {
             currentProxy = ApiClient.getRandomProxy();
         }

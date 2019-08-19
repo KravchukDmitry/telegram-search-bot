@@ -1,28 +1,23 @@
+import network.Skynet;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Parser {
 
-    public static ArrayList<Advert> getAdverts(String searchUrl) {
+    public static List<Advert> getAdverts(String searchUrl) {
         // TODO проврека валидноси переданного URL и замена пробелов в начале и конце
         if (searchUrl.startsWith("https://www.avito.ru")) {
-            ArrayList<Advert> adverts = null;
-            try {
-                adverts = parseAdverts(searchUrl);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return adverts;
+                return parseAdverts(Skynet.getPage(searchUrl, true));
         }
         return null;
     }
-    private static ArrayList<Advert> parseAdverts(String searchUrl) throws IOException {
-        ArrayList<Advert> adverts = new ArrayList<>();
-        Document document = Skynet.getPage(searchUrl, true);
+    private static List<Advert> parseAdverts(Document document) {
+        List<Advert> adverts = new ArrayList<>();
         for(Element advertElem : document.select("div.js-catalog_serp > div[data-type='1']")){
             Advert advert = new Advert();
             advert.setName(advertElem.selectFirst("span[itemprop='name']").text());

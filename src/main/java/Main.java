@@ -17,7 +17,7 @@ public class Main {
             botOptions.setProxyHost(adr);
             botOptions.setProxyPort(port);
             botOptions.setProxyType(DefaultBotOptions.ProxyType.SOCKS5);
-            System.out.println("Proxy on with " + adr + ":" + port);
+            System.out.println("network.Proxy on with " + adr + ":" + port);
         }
 
         SearchBot bot = new SearchBot( botOptions);

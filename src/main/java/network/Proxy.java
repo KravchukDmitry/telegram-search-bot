@@ -1,3 +1,5 @@
+package network;
+
 import java.io.IOException;
 import java.net.InetAddress;
 
@@ -55,7 +57,7 @@ public class Proxy {
 
     @Override
     public String toString() {
-        return "Proxy host : " + ip + " port : " + port;
+        return "network.Proxy host : " + ip + " port : " + port;
     }
 
     private class Support {
