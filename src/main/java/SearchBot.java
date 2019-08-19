@@ -24,16 +24,16 @@ public class SearchBot extends TelegramLongPollingBot {
         long chatId = update.getMessage().getChatId();
         System.out.println("Чат:" + chatId + " сообщение: " + update.getMessage().getMessageId());
         if (update.hasMessage() && update.getMessage().hasText()) {
-            switch (update.getMessage().getText()){
+            switch (update.getMessage().getText()) {
                 case "/start":
-                    sendReplyKeyboard(chatId, "Выберите тип поиска:", "Разовый","По расписанию");
+                    sendReplyKeyboard(chatId, "Выберите тип поиска:", "Разовый", "По расписанию");
                     break;
                 case "test":
                     sendNewAdverts(chatId, new Parser().getAdverts("https://www.avito.ru/moskva/tovary_dlya_kompyutera?s_trg=3&bt=1&q=ryzen+3+2200"));
                     break;
                 case "Разовый":
                     mode = "Разовый";
-                    sendReplyKeyboard(chatId, "Выберите доску объявлений:", "Авито","Юла");
+                    sendReplyKeyboard(chatId, "Выберите доску объявлений:", "Авито", "Юла");
                     break;
                 case "Авито":
                     desk = "Авито";
@@ -42,10 +42,10 @@ public class SearchBot extends TelegramLongPollingBot {
                 case "В начало":
                     mode = "";
                     desk = "";
-                    sendReplyKeyboard(chatId, "Выберите тип поиска:", "Разовый","По расписанию");
+                    sendReplyKeyboard(chatId, "Выберите тип поиска:", "Разовый", "По расписанию");
                     break;
                 default:
-                    if(mode.equals("Разовый") && desk.equals("Авито")){
+                    if (mode.equals("Разовый") && desk.equals("Авито")) {
                         sendNewAdverts(chatId, Parser.getAdverts("https://www.avito.ru/moskva/tovary_dlya_kompyutera?s_trg=3&bt=1&q=" + update.getMessage().getText().replace(" ", "+")));
                         sendReplyKeyboard(chatId, "Навигация", "В начало");
                     } else {
@@ -64,12 +64,12 @@ public class SearchBot extends TelegramLongPollingBot {
         return System.getenv("BotToken");
     }
 
-    public void sendNewAdverts(long chatId, ArrayList<Advert> adverts){
+    public void sendNewAdverts(long chatId, ArrayList<Advert> adverts) {
         SendMessage message = new SendMessage();
         message.setChatId(chatId);
-        if(adverts == null){
+        if (adverts == null) {
             message.setText("Ошибка подключения.  Доска объявлений отклонила запрос.");
-        } else if(adverts.size() == 0){
+        } else if (adverts.size() == 0) {
             message.setText("Новые объявлений не найдено");
         } else {
             message.setText("Новые объявления:");
@@ -103,8 +103,8 @@ public class SearchBot extends TelegramLongPollingBot {
         // Первая строчка клавиатуры
         KeyboardRow keyboardRow = new KeyboardRow();
         keyboard.add(keyboardRow);
-        for (String s : buttons){
-            if(s.equals("\n")){
+        for (String s : buttons) {
+            if (s.equals("\n")) {
                 keyboardRow = new KeyboardRow();
                 keyboard.add(keyboardRow);
             } else {
@@ -118,7 +118,7 @@ public class SearchBot extends TelegramLongPollingBot {
     }
 
 
-    private void sendMsg(SendMessage message){
+    private void sendMsg(SendMessage message) {
         try {
             execute(message); // Call method to send the message
         } catch (TelegramApiException e) {
@@ -126,7 +126,7 @@ public class SearchBot extends TelegramLongPollingBot {
         }
     }
 
-    public void sleep (long seconds){
+    public void sleep(long seconds) {
         try {
             Thread.sleep(seconds * 1000);
         } catch (InterruptedException e) {
