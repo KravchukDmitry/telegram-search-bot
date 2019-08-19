@@ -9,8 +9,10 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.net.InetAddress;
 
 public class ApiClient {
+
     public static Proxy getRandomProxy() {
         try {
             CloseableHttpClient client = HttpClientBuilder.create().build();
@@ -25,6 +27,14 @@ public class ApiClient {
         } catch (IOException e) {
             e.printStackTrace();
             throw new PageGettingException(e);
+        }
+    }
+
+    public static boolean proxyIsReachable(Proxy proxy) {
+        try {
+            return InetAddress.getByName(proxy.getIp()).isReachable(1000);
+        } catch (IOException ioe) {
+            return false;
         }
     }
 

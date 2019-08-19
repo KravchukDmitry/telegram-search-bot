@@ -1,7 +1,5 @@
 package network;
 
-import java.io.IOException;
-import java.net.InetAddress;
 
 public class Proxy {
     private String ipPort;
@@ -34,17 +32,6 @@ public class Proxy {
     public Proxy(String host, int port) {
         this.ip = host;
         this.port = port;
-    }
-
-    public boolean isReachable() {
-        boolean isReachable = false;
-        try {
-            isReachable = InetAddress.getByName(ip).isReachable(1000);
-        } catch (IOException ioe) {
-            System.out.println("host validation error");
-            ioe.printStackTrace();
-        }
-        return isReachable;
     }
 
     public boolean isWorks() {
