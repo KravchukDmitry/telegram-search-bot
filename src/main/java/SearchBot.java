@@ -50,6 +50,7 @@ public class SearchBot extends TelegramLongPollingBot {
                     break;
                 default:
                     if (mode.equals("Разовый") && desk.equals("Авито")) {
+                        sendMsg(new SendMessage(chatId, "Подождите, выполняется поиск..."));
                         sendNewAdverts(chatId, Parser.getAdverts("https://www.avito.ru/moskva/tovary_dlya_kompyutera?s_trg=3&bt=1&q=" + update.getMessage().getText().replace(" ", "+")));
                         sendReplyKeyboard(chatId, "Навигация", "В начало");
                     } else {
