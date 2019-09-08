@@ -4,8 +4,14 @@ import org.telegram.telegrambots.meta.ApiContext;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class Main {
+
+    private static Logger LOGGER = Logger.getLogger(Main.class.getName());
+
     public static void main(String[] args) {
         ApiContextInitializer.init();
         TelegramBotsApi botsApi = new TelegramBotsApi();
@@ -16,7 +22,7 @@ public class Main {
             botOptions.setProxyHost(adr);
             botOptions.setProxyPort(port);
             botOptions.setProxyType(DefaultBotOptions.ProxyType.SOCKS5);
-            System.out.println("network.Proxy on with " + adr + ":" + port);
+            LOGGER.log(Level.INFO, "network.Proxy on with " + adr + ":" + port);
         }
 
         SearchBot bot = new SearchBot( botOptions);

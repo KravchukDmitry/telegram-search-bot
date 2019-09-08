@@ -12,10 +12,13 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SearchBot extends TelegramLongPollingBot {
     String mode;
     String desk;
+    private static Logger LOGGER = Logger.getLogger(SearchBot.class.getName());
 
     public SearchBot(DefaultBotOptions options) {
         super(options);
@@ -23,7 +26,7 @@ public class SearchBot extends TelegramLongPollingBot {
 
     public void onUpdateReceived(Update update) {
         long chatId = update.getMessage().getChatId();
-        System.out.println("Чат:" + chatId + " сообщение: " + update.getMessage().getMessageId());
+        LOGGER.log(Level.INFO, "Чат:" + chatId + " сообщение: " + update.getMessage().getMessageId());
         if (!(update.hasMessage() && update.getMessage().hasText())) {
             return;
         }

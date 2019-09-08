@@ -11,9 +11,12 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Skynet {
     private static Proxy currentProxy;
+    private static Logger LOGGER = Logger.getLogger(Skynet.class.getName());
 
 
     public static Document getPage(String searchUrl, boolean proxyEnabled) {
@@ -21,7 +24,7 @@ public class Skynet {
             return Skynet.getPageByJsoup(searchUrl, proxyEnabled);
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Error on getPageByJsoup");
+            LOGGER.log(Level.WARNING, "Error on getPageByJsoup");
             try {
                 return Skynet.getPageByHtmlUnit(searchUrl, proxyEnabled);
             } catch (IOException ee) {
