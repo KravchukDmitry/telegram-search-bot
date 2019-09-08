@@ -4,6 +4,7 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.ProxyConfig;
 import com.gargoylesoftware.htmlunit.WebClient;
 import exceptions.PageGettingException;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,9 +15,9 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Slf4j
 public class Skynet {
     private static Proxy currentProxy;
-    private static Logger LOGGER = Logger.getLogger(Skynet.class.getName());
 
 
     public static Document getPage(String searchUrl, boolean proxyEnabled) {
@@ -24,12 +25,12 @@ public class Skynet {
             return Skynet.getPageByJsoup(searchUrl, proxyEnabled);
         } catch (IOException e) {
             e.printStackTrace();
-            LOGGER.log(Level.WARNING, "Error on getPageByJsoup");
+            log.error("Error on getPageByJsoup");
             try {
                 return Skynet.getPageByHtmlUnit(searchUrl, proxyEnabled);
             } catch (IOException ee) {
                 ee.printStackTrace();
-                System.out.println("Error on getPageByHtmlUnit. Current proxy doesn't work");
+                log.error("Error on getPageByHtmlUnit. Current proxy doesn't work");
                 currentProxy.setWorks(false);
                 throw new PageGettingException(ee);
             }
@@ -37,7 +38,7 @@ public class Skynet {
     }
 
     public static Document getPageByHtmlUnit(String searchUrl, boolean proxyEnabled) throws IOException {
-        System.out.println("Get doc by htmlUnit from url : " + searchUrl);
+        log.info("Get doc by htmlUnit from url : {}", searchUrl);
         WebClient webClient = getWebClient();
         if (proxyEnabled) {
             setProxy();
@@ -48,7 +49,7 @@ public class Skynet {
     }
 
     public static Document getPageByJsoup(String searchUrl, boolean proxyEnabled) throws IOException {
-        System.out.println("Get doc by Jsoup from url : " + searchUrl);
+        log.info("Get doc by Jsoup from url : {}", searchUrl);
         Connection connection = getConnection(searchUrl);
         if (proxyEnabled) {
             setProxy();
@@ -65,7 +66,7 @@ public class Skynet {
         userAgents.add("Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0");
         userAgents.add("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36");
         String userAgent = userAgents.get(new Random().nextInt(userAgents.size()));
-        System.out.println("Set UA : " + userAgent);
+        log.info("Set user agent : {}", userAgent);
         return userAgent;
     }
 
@@ -75,7 +76,7 @@ public class Skynet {
         referrers.add("https://yandex.ru/");
         referrers.add("https://www.bing.com/");
         String referrer = referrers.get(new Random().nextInt(referrers.size()));
-        System.out.println("Set referrer : " + referrer);
+        log.info("Set referrer : {}", referrer);
         return referrer;
     }
 

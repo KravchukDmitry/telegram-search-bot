@@ -1,4 +1,5 @@
 import exceptions.PageGettingException;
+import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -15,10 +16,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@Slf4j
 public class SearchBot extends TelegramLongPollingBot {
     String mode;
     String desk;
-    private static Logger LOGGER = Logger.getLogger(SearchBot.class.getName());
 
     public SearchBot(DefaultBotOptions options) {
         super(options);
@@ -26,7 +27,7 @@ public class SearchBot extends TelegramLongPollingBot {
 
     public void onUpdateReceived(Update update) {
         long chatId = update.getMessage().getChatId();
-        LOGGER.log(Level.INFO, "Чат:" + chatId + " сообщение: " + update.getMessage().getMessageId());
+        log.info("Чат: {} сообщение: {}",chatId, update.getMessage().getMessageId());
         if (!(update.hasMessage() && update.getMessage().hasText())) {
             return;
         }
