@@ -15,13 +15,13 @@ public class Main {
         ApiContextInitializer.init();
         TelegramBotsApi botsApi = new TelegramBotsApi();
         DefaultBotOptions botOptions = ApiContext.getInstance(DefaultBotOptions.class);
-        if (true) { // для запуска на локальной машине проставить true и запустить tor_proxy
-            String adr = "127.0.0.1";
-            int port = 9050;
-            botOptions.setProxyHost(adr);
-            botOptions.setProxyPort(port);
+        if (System.getProperty("hostingMode") == null) { // для запуска на локальной машине запустить tor_proxy
+            String tor_proxy_adr = "127.0.0.1";
+            int tor_proxy_port = 9050;
+            botOptions.setProxyHost(tor_proxy_adr);
+            botOptions.setProxyPort(tor_proxy_port);
             botOptions.setProxyType(DefaultBotOptions.ProxyType.SOCKS5);
-            log.info("Start bot with proxy server {} port {}", adr, port);
+            log.info("Start bot with proxy server {} port {}", tor_proxy_adr, tor_proxy_port);
         }
 
         SearchBot bot = new SearchBot( botOptions);
