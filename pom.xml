@@ -7,6 +7,9 @@
     <groupId>home-test-projects</groupId>
     <artifactId>telegram-search-bot</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <properties>
+        <slf4g.version>1.7.28</slf4g.version>
+    </properties>
     <build>
         <plugins>
             <plugin>
@@ -98,14 +101,14 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.28</version>
+            <version>${slf4g.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.28</version>
+            <version>${slf4g.version}</version>
         </dependency>
 
 
