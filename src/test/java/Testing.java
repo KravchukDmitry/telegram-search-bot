@@ -1,9 +1,12 @@
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
 
+
+@Slf4j
 public class Testing {
 
     @Test
@@ -12,7 +15,7 @@ public class Testing {
         Parser parser = new Parser();
         List<Advert> advertList = parser.getAdverts("https://www.avito.ru/");
         for (Advert a : advertList) {
-            System.out.println(a);
+            log.info(a.toString());
         }
     }
 }

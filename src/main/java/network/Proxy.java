@@ -1,6 +1,8 @@
 package network;
 
+import lombok.Data;
 
+@Data
 public class Proxy {
     private String ipPort;
     private String ip;
@@ -13,33 +15,9 @@ public class Proxy {
     private Support support;
     private boolean isWorks;
 
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
-
     public Proxy(String host, int port) {
         this.ip = host;
         this.port = port;
-    }
-
-    public boolean isWorks() {
-        return isWorks;
-    }
-
-    public void setWorks(boolean works) {
-        isWorks = works;
     }
 
     @Override
