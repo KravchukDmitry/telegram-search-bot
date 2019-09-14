@@ -21,9 +21,8 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class SearchBot extends TelegramLongPollingBot {
-    private Cache<Long, ChatSettings> botCache = CacheBuilder.newBuilder().expireAfterAccess(15, TimeUnit.MINUTES).build();
-    String mode;
-    String desk;
+    private Cache<Long, ChatSettings> botCache = CacheBuilder.newBuilder().
+            expireAfterAccess(15, TimeUnit.MINUTES).build();
 
     public SearchBot(DefaultBotOptions options) {
         super(options);
@@ -35,6 +34,11 @@ public class SearchBot extends TelegramLongPollingBot {
         if (!(update.hasMessage() && update.getMessage().hasText())) {
             return;
         }
+        if(botCache.getIfPresent(chatId) == null) {
+            botCache.put(chatId, new ChatSettings());
+            sendReplyKeyboard(chatId, "Выберите тип поиска:", "Разовый", "По расписанию");
+            return;
+        }
         try {
             switch (update.getMessage().getText()) {
                 case "/start":
@@ -44,20 +48,24 @@ public class SearchBot extends TelegramLongPollingBot {
                     sendNewAdverts(chatId, new Parser().getAdverts("https://www.avito.ru/moskva/tovary_dlya_kompyutera?s_trg=3&bt=1&q=ryzen+3+2200"));
                     break;
                 case "Разовый":
-                    mode = "Разовый";
+                    ChatSettings setting = botCache.getIfPresent(chatId);
+                    setting.setMode("Разовый");
+                    botCache.put(chatId, setting);
                     sendReplyKeyboard(chatId, "Выберите доску объявлений:", "Авито", "Юла");
                     break;
                 case "Авито":
-                    desk = "Авито";
+                    ChatSettings settings1 = botCache.getIfPresent(chatId);
+                    settings1.setDesk("Авито");
+                    botCache.put(chatId, settings1);
                     sendReplyKeyboard(chatId, "Введите строку поиска", "ryzen 1200", "ryzen 2200");
                     break;
                 case "В начало":
-                    mode = "";
-                    desk = "";
+                    botCache.put(chatId, new ChatSettings());
                     sendReplyKeyboard(chatId, "Выберите тип поиска:", "Разовый", "По расписанию");
                     break;
                 default:
-                    if (mode.equals("Разовый") && desk.equals("Авито")) {
+                    ChatSettings settings2 = botCache.getIfPresent(chatId);
+                    if (settings2.getMode().equals("Разовый") && settings2.getDesk().equals("Авито")) {
                         sendMsg(new SendMessage(chatId, "Подождите, выполняется поиск..."));
                         sendNewAdverts(chatId, Parser.getAdverts("https://www.avito.ru/moskva/tovary_dlya_kompyutera?s_trg=3&bt=1&q=" + update.getMessage().getText().replace(" ", "+")));
                         sendReplyKeyboard(chatId, "Навигация", "В начало");
