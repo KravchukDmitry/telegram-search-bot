@@ -1,3 +1,4 @@
+import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -20,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class SearchBot extends TelegramLongPollingBot {
-    private LoadingCache<Long, ChatSettings> botCache = BotCacheBuilder.buildCache(15, TimeUnit.SECONDS);
+    private Cache<Long, ChatSettings> botCache = CacheBuilder.newBuilder().expireAfterAccess(15, TimeUnit.MINUTES).build();
     String mode;
     String desk;
 

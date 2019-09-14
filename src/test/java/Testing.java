@@ -1,3 +1,4 @@
+import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -24,18 +25,6 @@ public class Testing {
         }
     }
 
-    @Test
-    @Ignore
-    public void guavaCacheTest() throws InterruptedException {
-        LoadingCache<Long, ChatSettings> botCache = BotCacheBuilder.buildCache(2,TimeUnit.MILLISECONDS);
-        ChatSettings settings = new ChatSettings();
-        Assert.assertEquals(0, botCache.size());
-        botCache.put(123l, settings);
-        Assert.assertEquals(1, botCache.size());
-        TimeUnit.SECONDS.sleep(10);
-        botCache.getIfPresent(123l);
-        Assert.assertEquals(0, botCache.size());
-    }
 
     @Test
     public void whenCacheMiss__thenValueIsComputed() {
