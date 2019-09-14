@@ -1,3 +1,6 @@
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import exceptions.PageGettingException;
 import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
@@ -13,11 +16,11 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class SearchBot extends TelegramLongPollingBot {
+    private LoadingCache<Long, ChatSettings> botCache = BotCacheBuilder.buildCache(15, TimeUnit.SECONDS);
     String mode;
     String desk;
 
